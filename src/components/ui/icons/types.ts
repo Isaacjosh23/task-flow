@@ -3,9 +3,10 @@ export interface IconProps {
 }
 
 export const Icons = {
+  Moon: "moon",
   Plus: "plus",
   Sun: "sun",
-  Moon: "moon",
+  Trash: "trash",
 } as const;
 
 export type Icons = (typeof Icons)[keyof typeof Icons];
