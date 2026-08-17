@@ -3,6 +3,8 @@ import SunIcon from "./sun";
 import MoonIcon from "./moon";
 import PlusIcon from "./plus";
 import TrashIcon from "./trash";
+import DotIcon from "./dots";
+import CalendarIcon from "./calendar";
 
 interface Props extends IconProps {
   type: Icons;
@@ -12,6 +14,12 @@ export function Icon({ type, className }: Props) {
   const props = { className };
 
   switch (type) {
+    case Icons.Calendar:
+      return <CalendarIcon {...props} />;
+
+    case Icons.Dot:
+      return <DotIcon {...props} />;
+
     case Icons.Moon:
       return <MoonIcon {...props} />;
 

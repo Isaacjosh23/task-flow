@@ -27,7 +27,7 @@ function Header() {
 
         <button
           onClick={handleToggleTheme}
-          className="flex size-[4.4rem] shrink-0 cursor-pointer items-center justify-center rounded-2xl border border-border"
+          className="flex size-[4.4rem] shrink-0 cursor-pointer items-center justify-center rounded-2xl border-2 border-border"
         >
           {toggleTheme ? (
             <MoonIcon className="size-[2.2rem]" />
