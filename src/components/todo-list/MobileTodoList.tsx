@@ -36,7 +36,7 @@ function MobileTodoList() {
                   />
 
                   <CardTitle
-                    className={`${progress === "Completed" ? "line-through text-text-secondary" : ""} text-xl font-medium`}
+                    className={`${progress === "Completed" ? "line-through text-text-secondary" : ""} text-2xl font-medium`}
                   >
                     {task.title}
                   </CardTitle>
