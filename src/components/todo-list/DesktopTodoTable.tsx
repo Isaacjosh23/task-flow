@@ -80,7 +80,7 @@ function DesktopTodoTable() {
                       <DotIcon className="size-6" />
                     </DropdownMenuTrigger>
 
-                    <DropdownMenuContent className="bg-surface border-2 border-border shadow-md rounded-xl p-5 w-40">
+                    <DropdownMenuContent className="bg-surface border-2 border-border ring-0 shadow-md rounded-xl p-5 w-40">
                       <DropdownMenuItem className="text-[1.2rem] hover:bg-text-secondary/30 cursor-pointer font-medium">
                         Edit
                       </DropdownMenuItem>
