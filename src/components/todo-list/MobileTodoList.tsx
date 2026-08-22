@@ -8,7 +8,7 @@ import {
 } from "../ui/Card";
 import { Checkbox } from "../ui/Checkbox";
 import CalendarIcon from "../ui/icons/calendar";
-import getTaskProgress from "./types";
+import getTaskProgress, { formatCompletedDate, formatTaskDate } from "./types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -72,8 +72,8 @@ function MobileTodoList() {
                 <CardDescription>
                   <p className="text-[1.2rem] text-text-secondary">
                     {progress === "Completed"
-                      ? `Completed on ${task.completedAt}`
-                      : `${task.date}`}
+                      ? `Completed on ${formatCompletedDate(task.completedAt)}`
+                      : `${formatTaskDate(task.date)}`}
                   </p>
                 </CardDescription>
               </div>

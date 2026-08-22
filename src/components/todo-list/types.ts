@@ -1,6 +1,6 @@
 type TaskProgress = "Pending" | "In Progress" | "Completed" | "Overdue";
 
-function getTaskProgress(date: string, checked: boolean): TaskProgress {
+function getTaskProgress(date: Date, checked: boolean): TaskProgress {
   if (checked) return "Completed";
 
   const taskDate = new Date(date);
@@ -14,6 +14,23 @@ function getTaskProgress(date: string, checked: boolean): TaskProgress {
   if (taskDate.getTime() === today.getTime()) return "In Progress";
 
   return "Overdue";
+}
+
+export function formatTaskDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+export function formatCompletedDate(date: Date | undefined) {
+  return date?.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
 }
 
 export default getTaskProgress;

@@ -8,8 +8,16 @@ import {
 import CalendarIcon from "../ui/icons/calendar";
 import DotIcon from "../ui/icons/dots";
 import { Table, TableBody, TableCell, TableRow } from "../ui/Table";
-import getTaskProgress from "./types";
+import getTaskProgress, { formatCompletedDate, formatTaskDate } from "./types";
 import { useTask } from "@/context/TaskContext";
+
+// function formatTaskDate(date: Date) {
+//   return date.toLocaleDateString("en-US", {
+//     month: "long",
+//     day: "numeric",
+//     year: "numeric",
+//   });
+// }
 
 function DesktopTodoTable() {
   const { filteredTasks, deleteTask, toggleTask } = useTask();
@@ -43,8 +51,8 @@ function DesktopTodoTable() {
 
                         <p className="text-[1.2rem] text-text-secondary">
                           {progress === "Completed"
-                            ? `Completed on ${task.completedAt}`
-                            : `${task.date}`}
+                            ? `Completed on ${formatCompletedDate(task.completedAt)}`
+                            : `${formatTaskDate(task.date)}`}
                         </p>
                       </div>
                     </div>
