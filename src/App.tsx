@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import TaskProgress from "./components/TaskProgress";
 import TodoForm from "./components/todo-form";
 import TodoList from "./components/todo-list";
+import { TaskProvider } from "./context/TaskContext";
 
 function App() {
   return (
@@ -10,11 +11,13 @@ function App() {
       <Header />
 
       <div className="flex flex-col gap-8 mt-[3.2rem]">
-        <TodoForm />
+        <TaskProvider>
+          <TodoForm />
 
-        <TodoList />
+          <TodoList />
 
-        <TaskProgress />
+          <TaskProgress />
+        </TaskProvider>
       </div>
     </Container>
   );

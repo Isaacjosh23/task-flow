@@ -5,6 +5,7 @@ import PlusIcon from "./plus";
 import TrashIcon from "./trash";
 import DotIcon from "./dots";
 import CalendarIcon from "./calendar";
+import DateCalendarIcon from "./date-calendar";
 
 interface Props extends IconProps {
   type: Icons;
@@ -16,6 +17,9 @@ export function Icon({ type, className }: Props) {
   switch (type) {
     case Icons.Calendar:
       return <CalendarIcon {...props} />;
+
+    case Icons.DateCalender:
+      return <DateCalendarIcon {...props} />;
 
     case Icons.Dot:
       return <DotIcon {...props} />;

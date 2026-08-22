@@ -6,11 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/Card";
-
-import { TodoList as todoTasks } from "@/types/todo";
 import { Checkbox } from "../ui/Checkbox";
 import CalendarIcon from "../ui/icons/calendar";
-import getTaskProgress from "./types";
+import getTaskProgress, { formatCompletedDate, formatTaskDate } from "./types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +16,14 @@ import {
   DropdownMenuTrigger,
 } from "../ui/Dropdown";
 import DotIcon from "../ui/icons/dots";
+import { useTask } from "@/context/TaskContext";
 
 function MobileTodoList() {
+  const { filteredTasks, deleteTask, toggleTask } = useTask();
+
   return (
     <div className="flex flex-col justify-center gap-6 mt-10 md:hidden">
-      {todoTasks.map((task) => {
+      {filteredTasks.map((task) => {
         const progress = getTaskProgress(task.date, task.checked);
 
         return (
@@ -31,6 +32,7 @@ function MobileTodoList() {
               <div className="flex items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   <Checkbox
+                    onClick={() => toggleTask(task.id)}
                     checked={task.checked}
                     className="size-7 shrink-0 text-surface border-border cursor-pointer"
                   />
@@ -53,7 +55,10 @@ function MobileTodoList() {
                         Edit
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem className="text-[1.2rem] hover:bg-text-secondary/30 cursor-pointer font-medium">
+                      <DropdownMenuItem
+                        onClick={() => deleteTask(task.id)}
+                        className="text-[1.2rem] hover:bg-text-secondary/30 cursor-pointer font-medium"
+                      >
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -67,8 +72,8 @@ function MobileTodoList() {
                 <CardDescription>
                   <p className="text-[1.2rem] text-text-secondary">
                     {progress === "Completed"
-                      ? `Completed on ${task.completedAt}`
-                      : `${task.date}`}
+                      ? `Completed on ${formatCompletedDate(task.completedAt)}`
+                      : `${formatTaskDate(task.date)}`}
                   </p>
                 </CardDescription>
               </div>

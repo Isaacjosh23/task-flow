@@ -8,15 +8,25 @@ import {
 import CalendarIcon from "../ui/icons/calendar";
 import DotIcon from "../ui/icons/dots";
 import { Table, TableBody, TableCell, TableRow } from "../ui/Table";
-import { TodoList as todoTasks } from "@/types/todo";
-import getTaskProgress from "./types";
+import getTaskProgress, { formatCompletedDate, formatTaskDate } from "./types";
+import { useTask } from "@/context/TaskContext";
+
+// function formatTaskDate(date: Date) {
+//   return date.toLocaleDateString("en-US", {
+//     month: "long",
+//     day: "numeric",
+//     year: "numeric",
+//   });
+// }
 
 function DesktopTodoTable() {
+  const { filteredTasks, deleteTask, toggleTask } = useTask();
+
   return (
     <div className="hidden md:block border-2 border-border mt-10 rounded-xl">
       <Table>
         <TableBody>
-          {todoTasks.map((task) => {
+          {filteredTasks.map((task) => {
             const progress = getTaskProgress(task.date, task.checked);
 
             return (
@@ -26,6 +36,7 @@ function DesktopTodoTable() {
                     <Checkbox
                       checked={task.checked}
                       className="size-[1.8rem] text-white border-border cursor-pointer"
+                      onClick={() => toggleTask(task.id)}
                     />
 
                     <div className="flex flex-col gap-3">
@@ -40,8 +51,8 @@ function DesktopTodoTable() {
 
                         <p className="text-[1.2rem] text-text-secondary">
                           {progress === "Completed"
-                            ? `Completed on ${task.completedAt}`
-                            : `${task.date}`}
+                            ? `Completed on ${formatCompletedDate(task.completedAt)}`
+                            : `${formatTaskDate(task.date)}`}
                         </p>
                       </div>
                     </div>
@@ -85,7 +96,10 @@ function DesktopTodoTable() {
                         Edit
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem className="text-[1.2rem] hover:bg-danger/30 text-danger cursor-pointer font-medium">
+                      <DropdownMenuItem
+                        onClick={() => deleteTask(task.id)}
+                        className="text-[1.2rem] hover:bg-danger/30 text-danger cursor-pointer font-medium"
+                      >
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
