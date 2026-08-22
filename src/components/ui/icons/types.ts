@@ -4,6 +4,7 @@ export interface IconProps {
 
 export const Icons = {
   Calendar: "calendar",
+  DateCalender: "date-calender",
   Dot: "dot",
   Moon: "moon",
   Plus: "plus",
