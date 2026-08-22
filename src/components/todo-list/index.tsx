@@ -2,7 +2,7 @@ import { useState } from "react";
 import TrashIcon from "../ui/icons/trash";
 import DesktopTodoTable from "./DesktopTodoTable";
 import MobileTodoList from "./MobileTodoList";
-import { TodoList as todoList } from "@/types/todo";
+import { useTask } from "@/context/TaskContext";
 
 type TaskCategory = "All" | "Active" | "Completed";
 
@@ -15,6 +15,22 @@ function TodoList() {
     setSelectedCategory(category);
   }
 
+  const { tasks } = useTask();
+
+  const filteredTasks = tasks.filter((task) => {
+    if (selectedCategory === "All") {
+      return true;
+    }
+
+    if (selectedCategory === "Active") {
+      return !task.checked;
+    }
+
+    if (selectedCategory === "Completed") {
+      return task.checked;
+    }
+  });
+
   return (
     <div className="rounded-xl border-2 border-border p-8 sm:p-[2.4rem] shadow-sm">
       <div className="grid grid-cols-1 gap-10">
@@ -25,7 +41,7 @@ function TodoList() {
 
           <div className="flex items-center justify-between gap-2 sm:gap-16">
             <p className="whitespace-nowrap text-[1.4rem] font-medium text-text-secondary sm:text-[1.5rem]">
-              {todoList.length} {todoList.length > 1 ? "tasks" : "task"}
+              {tasks.length} {tasks.length > 1 ? "tasks" : "task"}
             </p>
 
             <button className="flex shrink-0 items-center gap-[0.4rem] whitespace-nowrap rounded-xl border-2 border-border px-3 py-2 text-[1.4rem] font-medium text-danger sm:px-6 sm:py-3 sm:text-[1.5rem]">
@@ -48,8 +64,8 @@ function TodoList() {
         </div>
       </div>
 
-      <DesktopTodoTable />
-      <MobileTodoList />
+      <DesktopTodoTable filteredTasks={filteredTasks} />
+      <MobileTodoList filteredTasks={filteredTasks} />
     </div>
   );
 }

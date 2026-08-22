@@ -1,10 +1,12 @@
-import { TodoList as todoTasks } from "@/types/todo";
 import { Progress } from "./ui/Progress";
+import { useTask } from "@/context/TaskContext";
 
 function TaskProgress() {
-  const total = todoTasks.length;
+  const { tasks } = useTask();
 
-  const taskDone = todoTasks.filter((task) => task.checked).length;
+  const total = tasks.length;
+
+  const taskDone = tasks.filter((task) => task.checked).length;
 
   const taskPercentage = (taskDone / total) * 100;
 

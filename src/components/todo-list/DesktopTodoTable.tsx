@@ -1,3 +1,4 @@
+import type { TodoListTypes } from "@/types/todo";
 import { Checkbox } from "../ui/Checkbox";
 import {
   DropdownMenu,
@@ -8,15 +9,21 @@ import {
 import CalendarIcon from "../ui/icons/calendar";
 import DotIcon from "../ui/icons/dots";
 import { Table, TableBody, TableCell, TableRow } from "../ui/Table";
-import { TodoList as todoTasks } from "@/types/todo";
 import getTaskProgress from "./types";
+import { useTask } from "@/context/TaskContext";
 
-function DesktopTodoTable() {
+interface DesktopTodoTableProps {
+  filteredTasks: TodoListTypes[];
+}
+
+function DesktopTodoTable({ filteredTasks }: DesktopTodoTableProps) {
+  const { deleteTask, toggleTask } = useTask();
+
   return (
     <div className="hidden md:block border-2 border-border mt-10 rounded-xl">
       <Table>
         <TableBody>
-          {todoTasks.map((task) => {
+          {filteredTasks.map((task) => {
             const progress = getTaskProgress(task.date, task.checked);
 
             return (
@@ -26,6 +33,7 @@ function DesktopTodoTable() {
                     <Checkbox
                       checked={task.checked}
                       className="size-[1.8rem] text-white border-border cursor-pointer"
+                      onClick={() => toggleTask(task.id)}
                     />
 
                     <div className="flex flex-col gap-3">
@@ -85,7 +93,10 @@ function DesktopTodoTable() {
                         Edit
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem className="text-[1.2rem] hover:bg-danger/30 text-danger cursor-pointer font-medium">
+                      <DropdownMenuItem
+                        onClick={() => deleteTask(task.id)}
+                        className="text-[1.2rem] hover:bg-danger/30 text-danger cursor-pointer font-medium"
+                      >
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
