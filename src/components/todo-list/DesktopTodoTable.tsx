@@ -1,4 +1,3 @@
-import type { TodoListTypes } from "@/types/todo";
 import { Checkbox } from "../ui/Checkbox";
 import {
   DropdownMenu,
@@ -12,12 +11,8 @@ import { Table, TableBody, TableCell, TableRow } from "../ui/Table";
 import getTaskProgress from "./types";
 import { useTask } from "@/context/TaskContext";
 
-interface DesktopTodoTableProps {
-  filteredTasks: TodoListTypes[];
-}
-
-function DesktopTodoTable({ filteredTasks }: DesktopTodoTableProps) {
-  const { deleteTask, toggleTask } = useTask();
+function DesktopTodoTable() {
+  const { filteredTasks, deleteTask, toggleTask } = useTask();
 
   return (
     <div className="hidden md:block border-2 border-border mt-10 rounded-xl">

@@ -17,14 +17,9 @@ import {
 } from "../ui/Dropdown";
 import DotIcon from "../ui/icons/dots";
 import { useTask } from "@/context/TaskContext";
-import type { TodoListTypes } from "@/types/todo";
 
-interface MobileTodoListProps {
-  filteredTasks: TodoListTypes[];
-}
-
-function MobileTodoList({ filteredTasks }: MobileTodoListProps) {
-  const { deleteTask, toggleTask } = useTask();
+function MobileTodoList() {
+  const { filteredTasks, deleteTask, toggleTask } = useTask();
 
   return (
     <div className="flex flex-col justify-center gap-6 mt-10 md:hidden">

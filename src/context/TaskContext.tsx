@@ -1,17 +1,27 @@
 import { TodoList, type TodoListTypes } from "@/types/todo";
 import React, { createContext, useContext, useState } from "react";
 
+export type TaskCategory = "All" | "Active" | "Completed";
+
+export const taskCate: TaskCategory[] = ["All", "Active", "Completed"];
+
 interface TaskContextTypes {
   tasks: TodoListTypes[];
+  selectedCategory: TaskCategory;
+  setSelectedCategory: (cart: TaskCategory) => void;
+  onSelectCategory: (category: TaskCategory) => void;
+  filteredTasks: TodoListTypes[];
   addTask: (title: string) => void;
   deleteTask: (id: number) => void;
   toggleTask: (id: number) => void;
+  onClearCompleted: () => void;
 }
 
 const TaskContext = createContext<TaskContextTypes | undefined>(undefined);
 
 export function TaskProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<TodoListTypes[]>(TodoList);
+  const [selectedCategory, setSelectedCategory] = useState<TaskCategory>("All");
 
   const addTask = (title: string) => {
     const taskIds = tasks.map((task) => task.id);
@@ -38,8 +48,42 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    if (selectedCategory === "All") {
+      return true;
+    }
+
+    if (selectedCategory === "Active") {
+      return !task.checked;
+    }
+
+    if (selectedCategory === "Completed") {
+      return task.checked;
+    }
+  });
+
+  const onSelectCategory = (category: TaskCategory) => {
+    setSelectedCategory(category);
+  };
+
+  const onClearCompleted = () => {
+    setTasks(tasks.filter((task) => !task.checked));
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, deleteTask, toggleTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        selectedCategory,
+        setSelectedCategory,
+        onSelectCategory,
+        onClearCompleted,
+        filteredTasks,
+        addTask,
+        deleteTask,
+        toggleTask,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );
